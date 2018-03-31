@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!-- Your Toolbar Color-->
+        <item name="colorPrimary">@android:color/darker_gray</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@android:color/darker_gray</item>
+        <!-- colorAccent is used as the default value for colorControlActivated,
+    which is used to tint widgets -->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+    colorControlHighlight, and colorSwitchThumbNormal. -->
+
+       <!-- <item name="android:windowBackground">@drawable/gradient2</item> -->
+
+        <item name="android:windowBackground">@android:color/darker_gray</item>
+        <item name="android:textColor">@color/primaryThemeColor</item>
+        <item name="android:textColorHint">@color/primaryThemeColor</item>
+        <item name="android:editTextColor">@color/primaryThemeColor</item>
+        <item name="actionMenuTextColor">@color/primaryThemeColor</item>
+    </style>
+
+
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#090909</color>
+    <color name="colorPrimaryDark">#202020</color>
+    <color name="colorAccent">#505050</color>
+    <color name="primaryThemeColor">#FFDCD9D6</color>
+    <color name="headerColor">#2F2F2F</color>
+    <color name="layoutContorsColors">#8e8f91</color>
+    <color name="red"> #ff0000</color>
+
+</resources>

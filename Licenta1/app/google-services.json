@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "354015325171",
+    "firebase_url": "https://iot-android-ivana-angel.firebaseio.com",
+    "project_id": "iot-android-ivana-angel",
+    "storage_bucket": "iot-android-ivana-angel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354015325171:android:7aea0b56d7dc9963",
+        "android_client_info": {
+          "package_name": "ro.ase.angel.licenta1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354015325171-lfctatf523gj8f2iuksb0j7e3vd2afhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2SeDf-s6VYHqR8xI60RbwJE4BPqGNMU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
