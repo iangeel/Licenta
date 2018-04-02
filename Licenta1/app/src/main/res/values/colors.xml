@@ -8,5 +8,7 @@
     <color name="headerColor">#2F2F2F</color>
     <color name="layoutContorsColors">#8e8f91</color>
     <color name="red"> #ff0000</color>
+    <color name="green">#2eb510</color>
+    <color name="orange">#ff7200</color>
 
 </resources>

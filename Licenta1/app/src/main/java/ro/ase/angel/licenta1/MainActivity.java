@@ -50,15 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent = null;
                 switch (item.getItemId()) {
-//                    case R.id.nav_login:
-//                        if(!sessionManagement.isLoggedIn()) {
-//                            intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                            startActivity(intent);
-//                        }
-//                        else {
-//                            Toast.makeText(getApplicationContext(), R.string.already_logged_in, Toast.LENGTH_SHORT).show();
-//                        }
-//                        break;
+
                     case R.id.nav_profile:
                         intent = new Intent(getApplicationContext(), ProfileActivity.class);
                         startActivity(intent);
@@ -152,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void adaugaRecordTest() {
 
-            Records records = new Records(60, 20f, 300000L, userGlobalId);
+            Records records = new Records(80, 30f, 500000L, userGlobalId);
             firebaseController.addRecord(records);
 
     }

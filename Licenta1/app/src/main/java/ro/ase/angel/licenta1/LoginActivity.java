@@ -51,6 +51,7 @@ import ro.ase.angel.licenta1.Utils.Users;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "FBLOG";
+    private static final String RESET_TAG = "PASS_RESET_TAG";
     private FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
     private LoginButton btnFbLogin;
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     private SessionManagement sessionManagement;
     private FirebaseUser currentUser = null;
     private String email, password;
-    private TextView tvError;
+    private TextView tvError, tvForgotPassword;
 
 
     @Override
@@ -125,6 +126,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendPasswordResetEmail();
+            }
+        });
+
     }
 
 
@@ -139,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
         btnFbLogin = findViewById(R.id.btnFbLogin);
         btnFbLogin.setReadPermissions("email", "public_profile");
 
+        tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassword);
         tvError = (TextView) findViewById(R.id.tvError);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -236,28 +245,6 @@ public class LoginActivity extends AppCompatActivity {
         return check;
     }
 
-    private ValueEventListener uploadPlayersFromDatabaseGlobal() {
-        return new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Users user = data.getValue(Users.class);
-                    if (user != null) {
-                        usersList.add(user);
-                        Log.i("LoginActivity", "Selected User: " + user.toString());
-                    } else {
-                        Log.i("LoginActivity", "Selected User is null");
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("LoginActivity", "Data is not available");
-            }
-        };
-    }
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
@@ -296,8 +283,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    updateUI();
+                                    checkEmailVerification();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -315,12 +302,55 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    private void checkEmailVerification() {
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if(user.isEmailVerified()) {
+            updateUI();
+        }
+        else {
+            tvError.setText("Please verify your email before signing in...");
+            tvError.setTextColor(getResources().getColor(R.color.red));
+            tvError.setError("Please verify your email before signing in...");
+            mAuth.signOut();
+        }
+    }
 
     private void updateUI() {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void sendPasswordResetEmail() {
+        if(TextUtils.isEmpty(etUsername.getText().toString())) {
+            tvError.setText("Enter your e-mail");
+            tvError.setTextColor(getResources().getColor(R.color.orange));
+            tvError.setError("Enter your e-mail");
+        }
+        tvError.setError(null);
+
+        mAuth.sendPasswordResetEmail(etUsername.getText().toString())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            tvError.setText("Check your e-mail");
+                            tvError.setTextColor(getResources().getColor(R.color.green));
+                            tvError.setError("Check your e-mail");
+                            try {
+                                Thread.sleep(5000);
+                                tvError.setError(null);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else {
+                            Log.w(RESET_TAG, "passwordResetEmail:failure");
+                        }
+                    }
+                });
     }
 }
 

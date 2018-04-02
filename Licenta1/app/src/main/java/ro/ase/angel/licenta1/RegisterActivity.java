@@ -106,6 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
+                            sendVerificationEmail();
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             String[] loginExtra = {email, password};
                             intent.putExtra(Constants.LOGIN_EXTRA, loginExtra);
@@ -125,6 +126,25 @@ public class RegisterActivity extends AppCompatActivity {
                 });
         
 
+    }
+
+    private void sendVerificationEmail() {
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            mAuth.signOut();
+                        }
+                        else {
+                            Log.w(TAG, "sendVerificationEmail:failure", task.getException());
+                            Toast.makeText(RegisterActivity.this, "Failed sending verification email...",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 }

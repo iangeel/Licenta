@@ -43,38 +43,6 @@ public class FirebaseController implements FirebaseConstants {
         return firebaseController;
     }
 
-    public boolean addAllUsers(List<Users> users) {
-
-        if (users == null || users.size() == 0)
-            return false;
-
-        for (Users user : users) {
-            addUser(user);
-        }
-
-        return true;
-    }
-
-    public boolean addUser(Users user) {
-        String userGlobalId = null;
-        responseInsert = false;
-        if (user == null)
-            return responseInsert;
-
-        database = fcontroller.getReference(TABLE_NAME_USERS);
-        //genereaza un id pentru inregistrarea ta.
-        if (user.getGlobalId() == null || user.getGlobalId().trim().isEmpty()) {
-            userGlobalId = database.push().getKey();
-            user.setGlobalId(userGlobalId);
-        }
-        if (user.getRecords() == null || user.getRecords().toArray().length == 0) {
-            (database.child(userGlobalId)).push().setValue("records");
-        }
-        database.child(user.getGlobalId()).setValue(user);
-        addChangeEventListenerForEachUser(user);
-
-        return responseInsert;
-    }
 
     public boolean addRecord(Records record) {
 
@@ -86,7 +54,7 @@ public class FirebaseController implements FirebaseConstants {
 
         database = fcontroller.getReference(mAtuh.getCurrentUser().getUid());
 
-        //genereaza un id pentru inregistrarea ta.
+
         if (record.getGlobalId() == null || record.getGlobalId().trim().isEmpty()) {
             record.setGlobalId(database.push().getKey());
         }
@@ -96,26 +64,6 @@ public class FirebaseController implements FirebaseConstants {
         return responseInsert;
     }
 
-
-    private void addChangeEventListenerForEachUser(Users user) {
-
-        //acest eveniment se declanseaza pentru orice modificare adusa fiecarui user din firebase
-        database.child(user.getGlobalId().toString()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Users temp = dataSnapshot.getValue(Users.class);
-                if (temp != null) {
-                    responseInsert = true;
-                    Log.i("FireBaseController", "Updated User: " + temp.toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("FirebaseController", "Insert is not working");
-            }
-        });
-    }
 
     private void addChangeEventListenerForEachRecord(Records record) {
 
@@ -137,28 +85,12 @@ public class FirebaseController implements FirebaseConstants {
         });
     }
 
-    public void findAllUsers(ValueEventListener eventListener) {
+    public void findAllRecords(ValueEventListener eventListener, String userId) {
         if (eventListener != null)
-            database = fcontroller.getReference(TABLE_NAME_USERS);
+            database = fcontroller.getReference(userId);
         database.addValueEventListener(eventListener);
     }
 
-    public Query removePlayer(Users player){
-        //aceasta metoda face stergerea unui jucator, primit ca parametru
-        //prima data verificam daca jucatorul este nenull si are un globalId. altfel nu putem face delete
-        if(player == null || player.getGlobalId() == null || player.getGlobalId().trim().isEmpty()){
-            return null;
-        }
-        // accesam tabela players, deoarece vrem sa stergem un element din ea.
-        //accesul se face prin metoda getReference
-        database = fcontroller.getReference(TABLE_NAME_USERS);
-        //din toate elementele tabelei players, vrem sa stergem doar inregistrarea care are id-ul egal cu globalId.
-        //child(id) va ofera inregistrarea cautata.
-        //metoda removevalue() realizeaza stergerea din baza de date.
-        database.child(player.getGlobalId()).removeValue();
-        //returnam Query-ul care contine intr-un obiect Datasnapshot obiectul sters.
-        return database.child(player.getGlobalId());
-    }
 
 
 }

@@ -14,7 +14,7 @@
     <string name="register_button_id">REGISTER</string>
     <string name="cbLoginActivity">Remember me.</string>
     <string name="forgot_password_button">Forgot password?</string>
-    <string name="edit_text_username_email_hit">username / e-mail</string>
+    <string name="edit_text_username_email_hit">e-mail</string>
     <string name="edit_text_RePassword_hit">Retype your password</string>
     <string name="register_button_register_activity">Sign up</string>
     <string name="userNameError">Enter a valid username!</string>
