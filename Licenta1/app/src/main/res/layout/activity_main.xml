@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         >
 
+
+
         <include
             layout="@layout/navigation_actionbar"
             android:layout_width="match_parent"
@@ -26,14 +28,19 @@
             app:layout_constraintVertical_bias="0.0" />
 
 
+
+
+
+
+
         <LinearLayout
             android:id="@+id/llPulseContor"
             android:layout_width="184dp"
-            android:layout_height="193dp"
+            android:layout_height="184dp"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="25dp"
-            android:background="@drawable/border"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,6 +48,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.237">
+
+            <ProgressBar
+                android:id="@+id/progressBarPulse"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="184dp"
+                android:layout_height="184dp"
+                android:layout_centerInParent="true"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:secondaryProgress="0"
+                />
 
             <TextView
                 android:id="@+id/tvPulseContor"
@@ -56,17 +76,22 @@
                 android:layout_gravity="center"
                 android:text="@string/tvBPM"
                 android:textSize="40dp" />
-
         </LinearLayout>
+
+
+
+        <!---->
+
 
         <LinearLayout
             android:id="@+id/llSpeedContor"
             android:layout_width="184dp"
-            android:layout_height="193dp"
+            android:layout_height="184dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="25dp"
-            android:background="@drawable/border"
+            android:background="@drawable/shape_record_layout_2"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"

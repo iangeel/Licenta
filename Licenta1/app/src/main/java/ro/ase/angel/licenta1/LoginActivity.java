@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,6 +22,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.internal.CallbackManagerImpl;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,11 +32,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ro.ase.angel.licenta1.Database.FirebaseController;
@@ -55,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
     private LoginButton btnFbLogin;
-    private Button btnLogin, btnRegister;
+    private Button btnLogin, btnFacebook;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private CheckBox cbRememberMe;
@@ -66,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private SessionManagement sessionManagement;
     private FirebaseUser currentUser = null;
     private String email, password;
-    private TextView tvError, tvForgotPassword;
+    private TextView tvError, tvForgotPassword, btnRegister;
 
 
     @Override
@@ -106,23 +102,34 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnFbLogin.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
 
-            @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook:onCancel");
-                // ...
-            }
 
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError", error);
-                // ...
+            public void onClick(View view) {
+                btnFacebook.setEnabled(false);
+
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this,
+                        Arrays.asList("email", "public_profile"));
+                LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d(TAG, "facebook:onCancel");
+                        // ...
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.d(TAG, "facebook:onError", error);
+                        // ...
+                    }
+                });
             }
         });
 
@@ -144,15 +151,17 @@ public class LoginActivity extends AppCompatActivity {
         firebaseController = FirebaseController.getInstance();
 
         mCallbackManager = CallbackManager.Factory.create();
-        btnFbLogin = findViewById(R.id.btnFbLogin);
-        btnFbLogin.setReadPermissions("email", "public_profile");
+//        btnFbLogin = findViewById(R.id.btnFbLogin);
+//        btnFbLogin.setReadPermissions("email", "public_profile");
+
+        btnFacebook = (Button) findViewById(R.id.btnFacebook);
 
         tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassword);
         tvError = (TextView) findViewById(R.id.tvError);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnRegister = (Button) findViewById(R.id.btnRegister_login_activity);
+        btnRegister = (TextView) findViewById(R.id.btnRegister_login_activity);
         cbRememberMe = (CheckBox) findViewById(R.id.cbLoginActivity);
 
         sessionManagement = new SessionManagement(getApplicationContext());
@@ -259,11 +268,17 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             sessionManagement.createLoginSession(user.getUid(), user.getEmail());
+
+                            btnFacebook.setEnabled(true);
+
                             updateUI();
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+
+                            btnFacebook.setEnabled(true);
+
                             Toast.makeText(LoginActivity.this, "Auth fail...",
                                     Toast.LENGTH_SHORT).show();
 

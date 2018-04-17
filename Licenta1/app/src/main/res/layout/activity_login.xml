@@ -72,12 +72,24 @@
             <Button
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
+                android:layout_height="50dp"
+                android:textColor="@android:color/white"
                 android:id="@+id/btnLogin"
-                android:text="@string/login_button_id"/>
+                android:textSize="15sp"
+                android:text="@string/login_button_id"
+                android:background="@drawable/buttonshape_email_login"/>
 
             <Button
+                android:layout_marginTop="7dp"
+                android:background="@drawable/buttonshape_fb_login"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:id="@+id/btnFacebook"
+                android:text="@string/fb_login_button_id"/>
+
+            <TextView
                 android:layout_marginTop="7dp"
                 android:textColor="@android:color/black"
                 android:id="@+id/btnRegister_login_activity"
@@ -85,14 +97,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/register_button_id"
                 android:layout_gravity="center"
+                android:gravity="center"
                 />
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/btnFbLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="0dp" />
+
 
             <LinearLayout
                 android:orientation="horizontal"

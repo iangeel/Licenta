@@ -10,8 +10,9 @@
     <string name="nav_logout_title">Logout</string>
     <string name="edit_text_username_hit">username</string>
     <string name="edit_text_password_hit">password</string>
-    <string name="login_button_id">LOGIN</string>
-    <string name="register_button_id">REGISTER</string>
+    <string name="login_button_id">LOGIN WITH EMAIL</string>
+    <string name="fb_login_button_id">LOGIN WITH FACEBOOK</string>
+    <string name="register_button_id">Register Me.</string>
     <string name="cbLoginActivity">Remember me.</string>
     <string name="forgot_password_button">Forgot password?</string>
     <string name="edit_text_username_email_hit">e-mail</string>
