@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private int progressStatus = 0;
     private Handler handler = new Handler();
     private ImageView ivRecord, ivPause, ivStop;
+    private boolean isPressed = false;
 
 
     @Override
@@ -87,17 +88,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressStatus = 0;
+                isPressed = true;
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        while(ivPause.is) {
-                            progressStatus ++;
+                        while (true) {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressBarPulse.setProgress(progressStatus);
 
-
+                                }
+                            });
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            progressStatus++;
+                        }
                     }
-                })
-                }
+                }).start();
+
+
+            }
+        });
+
+        ivPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPressed = false;
+
             }
         });
     }
