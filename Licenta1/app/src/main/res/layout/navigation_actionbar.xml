@@ -3,9 +3,9 @@
     android:id="@+id/navigation_action_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/darker_gray"
+    android:background="?attr/backgroundcolor"
     android:orientation="vertical"
-    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
-
+    >
+<!--android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"-->
 
 </android.support.v7.widget.Toolbar>

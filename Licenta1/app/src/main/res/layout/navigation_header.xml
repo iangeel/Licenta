@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="140dp"
-    android:background="@android:color/darker_gray">
+    android:background="?attr/backgroundcolor">
 
     <ImageView
+        android:id="@+id/ivHeader"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
@@ -13,5 +14,12 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="0dp"
         android:src="@drawable/heartbeat3" />
+
+    <ImageView
+        android:id="@+id/ivDayNightTheme"
+        android:layout_width="30dp"
+        android:layout_height="50dp"
+        android:src="?attr/moonicon"
+        android:layout_alignRight="@id/ivHeader"/>
 
 </RelativeLayout>

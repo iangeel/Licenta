@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ro.ase.angel.licenta1.ProfileActivity">
+    tools:context="ro.ase.angel.licenta1.ProfileActivity"
+    android:background="?attr/backgroundcolor">
 
 
     <ListView
         android:id="@+id/lvRecords"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundcolor"
+        >
 
     </ListView>
 

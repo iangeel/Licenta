@@ -1,26 +1,62 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Day/Light application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <!-- Your Toolbar Color-->
-        <item name="colorPrimary">@android:color/darker_gray</item>
+        <item name="colorPrimary">#ffffff</item>
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@android:color/darker_gray</item>
+        <item name="colorPrimaryDark">#ffffff</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
     which is used to tint widgets -->
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#4d4d4d</item>
 
         <!-- You can also set colorControlNormal, colorControlActivated
     colorControlHighlight, and colorSwitchThumbNormal. -->
 
        <!-- <item name="android:windowBackground">@drawable/gradient2</item> -->
+        <item name="android:actionMenuTextColor">#4d4d4d</item>
+        <item name="backgroundcolor">#fcfcfc</item>
+        <item name="cardbackground">#ffffff</item>
+        <item name="textcolor">#4d4d4d</item>
+        <item name="hintcolor">#4d4d4d</item>
+        <item name="edittextcolor">#4d4d4d</item>
+        <item name="menutextcolor">#4d4d4d</item>
+        <item name="usericon">@drawable/ic_action_user_black</item>
+        <item name="passicon">@drawable/ic_action_pass_black</item>
+        <item name="moonicon">@drawable/moon_black</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTranzition</item>
+    </style>
 
-        <item name="android:windowBackground">@android:color/darker_gray</item>
-        <item name="android:textColor">@color/primaryThemeColor</item>
-        <item name="android:textColorHint">@color/primaryThemeColor</item>
-        <item name="android:editTextColor">@color/primaryThemeColor</item>
-        <item name="actionMenuTextColor">@color/primaryThemeColor</item>
+
+    <!-- Night/Dark application theme. -->
+    <style name="darktheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#212121</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">#000000</item>
+        <!-- colorAccent is used as the default value for colorControlActivated,
+    which is used to tint widgets -->
+        <item name="colorAccent">#4d4d4d</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+    colorControlHighlight, and colorSwitchThumbNormal. -->
+
+        <!-- <item name="android:windowBackground">@drawable/gradient2</item> -->
+        <item name="android:actionMenuTextColor">#ffffff</item>
+        <item name="backgroundcolor">#303030</item>
+        <item name="cardbackground">#424242</item>
+        <item name="textcolor">#ffffff</item>
+        <item name="hintcolor">#ffffff</item>
+        <item name="edittextcolor">#ffffff</item>
+        <item name="menutextcolor">#ffffff</item>
+        <item name="usericon">@drawable/ic_action_user</item>
+        <item name="passicon">@drawable/ic_action_pass</item>
+        <item name="moonicon">@drawable/moon_white</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTranzition</item>
+    </style>
+
+
+    <style name="WindowAnimationTranzition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 

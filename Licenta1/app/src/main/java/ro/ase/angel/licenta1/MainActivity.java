@@ -1,6 +1,8 @@
 package ro.ase.angel.licenta1;
 
 import android.content.Intent;
+import android.graphics.drawable.RotateDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -8,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,21 +43,23 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBarPulse, progressBarSpeed;
     private int progressStatus = 0;
     private Handler handler = new Handler();
-    private ImageView ivRecord, ivPause, ivStop;
-    private boolean isPressed = false;
+    private ImageView ivRecord, ivPause, ivStop, ivDayNightTheme;
+    private boolean isPressed;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.darktheme);
+        }
+        else setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         componentsInitialization();
         checkUserConnection();
-        adaugaRecordTest();
 
-        Toast.makeText(getApplicationContext(), FirebaseAuth.getInstance().getCurrentUser().getEmail().toString(),
-                Toast.LENGTH_LONG).show();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -87,30 +92,14 @@ public class MainActivity extends AppCompatActivity {
         ivRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressStatus = 0;
-                isPressed = true;
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressBarPulse.setProgress(progressStatus);
-
-                                }
-                            });
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            progressStatus++;
-                        }
+                if(progressBarPulse != null && progressBarSpeed != null) {
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        RotateDrawable rotateDrawable = (RotateDrawable) progressBarPulse.getIndeterminateDrawable();
+                        rotateDrawable.setToDegrees(270);
+                        RotateDrawable rotateDrawable2 = (RotateDrawable) progressBarSpeed.getIndeterminateDrawable();
+                        rotateDrawable2.setToDegrees(270);
                     }
-                }).start();
-
+                }
 
             }
         });
@@ -118,26 +107,50 @@ public class MainActivity extends AppCompatActivity {
         ivPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isPressed = false;
+                if(progressBarPulse != null && progressBarSpeed != null) {
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        RotateDrawable rotateDrawable = (RotateDrawable) progressBarPulse.getIndeterminateDrawable();
+                        rotateDrawable.setToDegrees(-90);
+                        RotateDrawable rotateDrawable2 = (RotateDrawable) progressBarSpeed.getIndeterminateDrawable();
+                        rotateDrawable2.setToDegrees(-90);
+                    }
+                }
 
             }
         });
+
+        ivDayNightTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                restartApp();
+            }
+        });
+
+
     }
 
     private void componentsInitialization() {
+
+
         navigationView = (NavigationView) findViewById(R.id.navId);
         mToolbar = (Toolbar) findViewById(R.id.navigation_action_id);
         setSupportActionBar(mToolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayoutId);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open,
                 R.string.close);
-
+        View headerLayout = navigationView.getHeaderView(0);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+        ivDayNightTheme = headerLayout.findViewById(R.id.ivDayNightTheme);
 
         firebaseController = FirebaseController.getInstance();
 
-
+        progressBarSpeed = findViewById(R.id.progressBarSpeed);
         progressBarPulse = findViewById(R.id.progressBarPulse);
         ivRecord = findViewById(R.id.ivStartRecord);
         ivPause = findViewById(R.id.ivPauseRecord);
@@ -150,6 +163,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sessionManagement = new SessionManagement(getApplicationContext());
+
+        if(progressBarPulse != null && progressBarSpeed != null) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                RotateDrawable rotateDrawable = (RotateDrawable) progressBarPulse.getIndeterminateDrawable();
+                rotateDrawable.setToDegrees(-90);
+                RotateDrawable rotateDrawable2 = (RotateDrawable) progressBarSpeed.getIndeterminateDrawable();
+                rotateDrawable2.setToDegrees(-90);
+            }
+        }
     }
 
     @Override
@@ -197,6 +219,12 @@ public class MainActivity extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), R.string.not_logged_in, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+
     }
 
     private void adaugaRecordTest() {

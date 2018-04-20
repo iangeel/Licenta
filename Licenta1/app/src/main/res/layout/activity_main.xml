@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     android:id="@+id/mainDrawerLayoutId"
     tools:context="ro.ase.angel.licenta1.MainActivity"
+    android:background="?attr/backgroundcolor"
     >
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/backgroundcolor"
         >
 
 
@@ -29,11 +31,7 @@
 
 
 
-
-
-
-
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/llPulseContor"
             android:layout_width="184dp"
             android:layout_height="184dp"
@@ -41,8 +39,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="25dp"
-            android:gravity="center"
-            android:orientation="vertical"
+            android:background="@drawable/shape_record_layout_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/llSpeedContor"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,33 +52,45 @@
                 android:layout_width="184dp"
                 android:layout_height="184dp"
                 android:layout_centerInParent="true"
-                android:progress="0"
-                android:progressDrawable="@drawable/custom_progressbar"
-                android:secondaryProgress="0"
+
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/custom_progressbar"
+                android:indeterminateOnly="false"
                 />
 
             <TextView
                 android:id="@+id/tvPulseContor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_alignTop="@id/progressBarPulse"
+                android:layout_marginTop="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="37dp"
+                android:background="#00000000"
                 android:text="120"
+                android:textColor="@color/colorAccent"
                 android:textSize="40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignBottom="@id/tvPulseContor"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
+                android:layout_marginBottom="43dp"
                 android:text="@string/tvBPM"
-                android:textSize="40dp" />
-        </LinearLayout>
+                android:textColor="@color/colorAccent"
+                android:textSize="35dp"
+                android:id="@+id/textView" />
+        </RelativeLayout>
 
 
 
         <!---->
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/llSpeedContor"
             android:layout_width="184dp"
             android:layout_height="184dp"
@@ -90,30 +99,47 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/shape_record_layout_2"
-            android:gravity="center"
-            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/llPulseContor"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.237">
 
+            <ProgressBar
+                android:id="@+id/progressBarSpeed"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="184dp"
+                android:layout_height="184dp"
+                android:layout_centerInParent="true"
+
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/custom_progressbar"
+                android:indeterminateOnly="false"
+                />
+
             <TextView
                 android:id="@+id/tvKmContor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="50dp"
                 android:text="15"
+                android:layout_alignTop="@id/progressBarSpeed"
                 android:textSize="40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="43dp"
+                android:layout_alignBottom="@id/tvKmContor"
+                android:textColor="@color/colorAccent"
                 android:text="@string/tvKMH"
-                android:textSize="40dp" />
+                android:textSize="35dp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/llButtons"
@@ -137,7 +163,7 @@
                     android:id="@+id/ivStartRecord"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:background="@android:color/darker_gray"
+                    android:background="?attr/backgroundcolor"
                     android:layout_marginRight="6dp"
                     />
                 <ImageView
@@ -145,14 +171,14 @@
                     android:id="@+id/ivPauseRecord"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:background="@android:color/darker_gray"
+                    android:background="?attr/backgroundcolor"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"/>
                 <ImageView
                     android:id="@+id/ivStopRecord"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:background="@android:color/white"
+                    android:background="?attr/backgroundcolor"
                     android:layout_marginLeft="6dp"/>
 
             </LinearLayout>
@@ -183,7 +209,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_header"
-        app:menu="@menu/navigation_menu">
+        app:menu="@menu/navigation_menu"
+        android:background="?attr/backgroundcolor"
+        app:itemTextColor="?attr/textcolor"
+        >
 
     </android.support.design.widget.NavigationView>
 
