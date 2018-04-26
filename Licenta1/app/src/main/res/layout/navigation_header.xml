@@ -1,25 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="140dp"
-    android:background="?attr/backgroundcolor">
+    android:background="@drawable/header"
+
+  >
+
 
     <ImageView
-        android:id="@+id/ivHeader"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="0dp"
-        android:src="@drawable/heartbeat3" />
+        android:layout_marginTop="20dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/user_logo"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:id="@+id/header_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="27dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/header_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="27dp"
+        android:textColor="@android:color/white"
+        />
 
     <ImageView
+
         android:id="@+id/ivDayNightTheme"
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:src="?attr/moonicon"
-        android:layout_alignRight="@id/ivHeader"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="-50dp"
+        android:layout_marginLeft="120dp"
+        />
 
-</RelativeLayout>
+</LinearLayout>

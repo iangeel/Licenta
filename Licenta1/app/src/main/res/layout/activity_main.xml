@@ -183,20 +183,7 @@
 
             </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvUserMainActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="163dp"
-            android:layout_marginStart="163dp"
-            android:layout_marginTop="80dp"
-            android:text="Not connected"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
 
 
@@ -208,12 +195,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/navigation_header"
+
         app:menu="@menu/navigation_menu"
         android:background="?attr/backgroundcolor"
         app:itemTextColor="?attr/textcolor"
         >
 
     </android.support.design.widget.NavigationView>
-
+    <!--app:headerLayout="@layout/navigation_header"-->
 </android.support.v4.widget.DrawerLayout>

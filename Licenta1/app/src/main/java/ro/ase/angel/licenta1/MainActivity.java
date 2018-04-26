@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
-    private TextView tvBPM, tvSpeed, tvUser;
+    private TextView tvBPM, tvSpeed, tvUser, header_email, header_welcome;
     private SessionManagement sessionManagement;
     private FirebaseController firebaseController;
     private String userGlobalId, username;
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private ImageView ivRecord, ivPause, ivStop, ivDayNightTheme;
     private boolean isPressed;
+
 
 
     @Override
@@ -138,15 +139,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         navigationView = (NavigationView) findViewById(R.id.navId);
+        View headerLayout = navigationView.inflateHeaderView(R.layout.navigation_header);
         mToolbar = (Toolbar) findViewById(R.id.navigation_action_id);
         setSupportActionBar(mToolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayoutId);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open,
                 R.string.close);
-        View headerLayout = navigationView.getHeaderView(0);
+        //View headerLayout = navigationView.getHeaderView(0);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         ivDayNightTheme = headerLayout.findViewById(R.id.ivDayNightTheme);
+        header_email = headerLayout.findViewById(R.id.header_email);
+        header_welcome = headerLayout.findViewById(R.id.header_welcome);
 
         firebaseController = FirebaseController.getInstance();
 
@@ -158,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
         tvBPM = (TextView) findViewById(R.id.tvPulseContor);
         tvSpeed = (TextView) findViewById(R.id.tvKmContor);
-        tvUser = (TextView) findViewById(R.id.tvUserMainActivity);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -186,6 +190,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     private void checkUserConnection() {
 //        if(sessionManagement.isLoggedIn()) {
 //            HashMap<String, String> userDetails = sessionManagement.getUserDetails();
@@ -199,7 +205,8 @@ public class MainActivity extends AppCompatActivity {
 //        else
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             username = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
-            tvUser.setText("You are logged in as: " + username.toString());
+            header_welcome.setText("Welcome");
+            header_email.setText(username);
         }
     }
 

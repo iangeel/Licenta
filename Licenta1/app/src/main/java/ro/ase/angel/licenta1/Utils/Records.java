@@ -16,8 +16,11 @@ public class Records implements Parcelable {
     private Long time;
     private String userGlobalId;
 
+
     public Records() {
     }
+
+
 
     public Records(Integer pulse, Float speed) {
         this.pulse = pulse;
