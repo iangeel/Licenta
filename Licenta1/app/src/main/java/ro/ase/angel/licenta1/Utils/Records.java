@@ -3,6 +3,7 @@ package ro.ase.angel.licenta1.Utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Records implements Parcelable {
     private String globalId;
-    private Integer pulse;
+    private List<Integer> pulse;
     private Float speed;
     private Long time;
     private String userGlobalId;
@@ -22,18 +23,18 @@ public class Records implements Parcelable {
 
 
 
-    public Records(Integer pulse, Float speed) {
+    public Records(List<Integer> pulse, Float speed) {
         this.pulse = pulse;
         this.speed = speed;
     }
 
-    public Records(Integer pulse, Float speed, Long time) {
+    public Records(List<Integer> pulse, Float speed, Long time) {
         this.pulse = pulse;
         this.speed = speed;
         this.time = time;
     }
 
-    public Records(Integer pulse, Float speed, Long time, String userGlobalId) {
+    public Records(List<Integer> pulse, Float speed, Long time, String userGlobalId) {
         this.pulse = pulse;
         this.speed = speed;
         this.time = time;
@@ -48,7 +49,7 @@ public class Records implements Parcelable {
 //    }
 
     public Records(Parcel parcel) {
-        this.pulse = parcel.readInt();
+        this.pulse = parcel.readArrayList(Integer.class.getClassLoader());
         this.speed = parcel.readFloat();
         this.time = parcel.readLong();
     }
@@ -61,11 +62,11 @@ public class Records implements Parcelable {
         this.userGlobalId = userGlobalId;
     }
 
-    public Integer getPulse() {
+    public List<Integer> getPulse() {
         return pulse;
     }
 
-    public void setPulse(Integer pulse) {
+    public void setPulse(List<Integer> pulse) {
         this.pulse = pulse;
     }
 
@@ -119,7 +120,7 @@ public class Records implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(this.pulse);
+        parcel.writeList(this.pulse);
         parcel.writeFloat(this.speed);
         parcel.writeLong(this.time);
     }

@@ -58,6 +58,7 @@ public class FirebaseController implements FirebaseConstants {
         if (record.getGlobalId() == null || record.getGlobalId().trim().isEmpty()) {
             record.setGlobalId(database.push().getKey());
         }
+
         database.child(record.getGlobalId()).setValue(record);
         addChangeEventListenerForEachRecord(record);
 

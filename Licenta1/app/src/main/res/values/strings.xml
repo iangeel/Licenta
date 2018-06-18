@@ -28,8 +28,11 @@
     <string name="speed">Speed</string>
     <string name="tvTime">Time</string>
     <string name="tvMin">Min</string>
-
+    <string name="pulseNA">N/A</string>
 
     <string name="facebook_app_id">246304895913197</string>
     <string name="fb_login_protocol_scheme">fb246304895913197</string>
+    <string name="tv_lowest_value">Lowest value registered:</string>
+    <string name="tv_medium_value">Medium value registered:</string>
+    <string name="tv_highest_value">Highest value registered:</string>
 </resources>

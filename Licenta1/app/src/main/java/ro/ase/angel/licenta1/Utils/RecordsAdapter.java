@@ -45,7 +45,18 @@ public class RecordsAdapter extends ArrayAdapter{
 
         Records records = objects.get(position);
 
-        tvPulse.setText(records != null && records.getPulse() != null ? records.getPulse().toString() : "");
+        int sum = 0;
+        
+       //tvPulse.setText(records != null && records.getPulse() != null ? records.getPulse().toString() : "");
+        if(records != null && records.getPulse() != null) {
+            for(int pulseValue : records.getPulse()) {
+                sum += pulseValue;
+            }
+            String medie = Integer.toString(sum / records.getPulse().toArray().length);
+            tvPulse.setText(medie);
+
+        }
+        else tvPulse.setText("");
         tvSpeed.setText(records != null && records.getSpeed() != null ? records.getSpeed().toString() : "");
         tvTime.setText(records != null && records.getTime() != null ? records.timeFormat(records.getTime()) : "");
 

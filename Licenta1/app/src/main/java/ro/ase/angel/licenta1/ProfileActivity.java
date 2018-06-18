@@ -80,9 +80,9 @@ public class ProfileActivity extends AppCompatActivity {
                     Records record = data.getValue(Records.class);
                     if (record != null) {
                         recordsList.add(record);
-                        Log.i("LoginActivity", "Selected User: " + record.toString());
+                        Log.i("ProfileActivity", "Selected record: " + record.toString());
                     } else {
-                        Log.i("LoginActivity", "Selected User is null");
+                        Log.i("ProfileActivity", "Selected record is null");
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -90,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w("LoginActivity", "Data is not available");
+                Log.w("ProfileActivity", "Data is not available");
             }
         };
     }

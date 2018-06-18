@@ -12,25 +12,44 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.HashMap;
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import ro.ase.angel.licenta1.Chart.ChartHelper;
 import ro.ase.angel.licenta1.Database.FirebaseController;
+import ro.ase.angel.licenta1.MqttConnection.MqttHelper;
 import ro.ase.angel.licenta1.Utils.Records;
 import ro.ase.angel.licenta1.Utils.SessionManagement;
-import ro.ase.angel.licenta1.Utils.Users;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity   {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
@@ -41,11 +60,14 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseController firebaseController;
     private String userGlobalId, username;
     private ProgressBar progressBarPulse, progressBarSpeed;
-    private int progressStatus = 0;
-    private Handler handler = new Handler();
     private ImageView ivRecord, ivPause, ivStop, ivDayNightTheme;
-    private boolean isPressed;
-
+    private MqttHelper mqttHelper;
+    private ScheduledExecutorService executorService;
+    Timer timer;
+    TimerTask doThis;
+    public static List<Integer> pulseValuesRetrivedFromServer = new ArrayList<>();
+    ChartHelper chartHelper;
+    LineChart lineChart;
 
 
     @Override
@@ -99,8 +121,24 @@ public class MainActivity extends AppCompatActivity {
                         rotateDrawable.setToDegrees(270);
                         RotateDrawable rotateDrawable2 = (RotateDrawable) progressBarSpeed.getIndeterminateDrawable();
                         rotateDrawable2.setToDegrees(270);
+
                     }
+
                 }
+
+                    int delay = 0;
+                    int period = 5000;
+                    doThis = new TimerTask() {
+                        @Override
+                        public void run() {
+                            mqttHelper.publishMqttPulseTopic();
+                        }
+                    };
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(doThis, delay , period);
+
+
+
 
             }
         });
@@ -116,6 +154,9 @@ public class MainActivity extends AppCompatActivity {
                         rotateDrawable2.setToDegrees(-90);
                     }
                 }
+
+                timer.cancel();
+                addRecords();
 
             }
         });
@@ -153,6 +194,15 @@ public class MainActivity extends AppCompatActivity {
         header_welcome = headerLayout.findViewById(R.id.header_welcome);
 
         firebaseController = FirebaseController.getInstance();
+        //mqtt start
+        startMqtt();
+        executorService = Executors.newSingleThreadScheduledExecutor();
+        timer = new Timer();
+
+        //chart initialization
+        lineChart = findViewById(R.id.chart);
+        chartHelper = new ChartHelper(lineChart);
+
 
         progressBarSpeed = findViewById(R.id.progressBarSpeed);
         progressBarPulse = findViewById(R.id.progressBarPulse);
@@ -176,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
                 rotateDrawable2.setToDegrees(-90);
             }
         }
+
+
     }
 
     @Override
@@ -234,10 +286,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void adaugaRecordTest() {
 
-            Records records = new Records(80, 30f, 500000L, userGlobalId);
-            firebaseController.addRecord(records);
+    private void startMqtt() {
+        mqttHelper = new MqttHelper(this.getApplicationContext());
+        mqttHelper.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable cause) {
 
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                Log.d("MQTT_message",message.toString());
+                tvBPM.setText(message.toString());
+                pulseValuesRetrivedFromServer.add(Integer.parseInt(message.toString()));
+                chartHelper.addEntry(Float.valueOf(message.toString()));
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+
+            }
+        });
+    }
+
+
+    private void addRecords() {
+
+        Records record = new Records(pulseValuesRetrivedFromServer, 30f, 120L, userGlobalId);
+        firebaseController.addRecord(record);
+
+    }
+
+    private void debugging() {
+        Log.d("DEBUG", "debugging");
     }
 }
