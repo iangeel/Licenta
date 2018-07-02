@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ro.ase.angel.licenta1.LoginActivity"
-    android:background="?attr/backgroundcolor"
+    android:background="@drawable/football_blurred"
     >
 
 
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="25dp"
-            android:background="?attr/backgroundcolor">
+            android:background="@drawable/football_blurred">
 
         <ImageView
             android:id="@+id/imageViewLogin"
@@ -46,28 +46,30 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:id="@+id/etUsername"
                 android:hint="@string/edit_text_username_hit"
-                android:textColorHint="?attr/hintcolor"
-                android:textColor="?attr/textcolor"
+                android:textColorHint="@android:color/white"
+                android:textColor="@android:color/white"
                 android:ems="10"
                 android:textSize="18dp"
-                android:drawableLeft="?attr/usericon"
+                android:fontFamily="@font/octin"
+                android:drawableLeft="@drawable/ic_action_user"
                 android:background="@android:color/transparent"
                 android:layout_marginBottom="10dp"/>
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:id="@+id/etPassword"
                 android:inputType="textPassword"
                 android:hint="@string/edit_text_password_hit"
-                android:textColorHint="?attr/hintcolor"
-                android:textColor="?attr/textcolor"
+                android:textColorHint="@android:color/white"
+                android:textColor="@android:color/white"
                 android:ems="10"
                 android:textSize="18dp"
-                android:drawableLeft="?attr/passicon"
+                android:fontFamily="@font/octin"
+                android:drawableLeft="@drawable/ic_action_pass"
                 android:background="@android:color/transparent"
                 android:layout_marginBottom="10dp"/>
 
@@ -93,7 +95,7 @@
 
             <TextView
                 android:layout_marginTop="7dp"
-                android:textColor="?attr/textcolor"
+                android:textColor="@android:color/white"
                 android:id="@+id/btnRegister_login_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,7 +125,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/cbLoginActivity"
-                        android:textColor="?attr/textcolor"
+                        android:textColor="@android:color/white"
                         android:textStyle="bold"
                         />
                 </LinearLayout>
@@ -138,7 +140,7 @@
 
                     <TextView
 
-                        android:textColor="?attr/textcolor"
+                        android:textColor="@android:color/white"
                         android:id="@+id/tvForgotPassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

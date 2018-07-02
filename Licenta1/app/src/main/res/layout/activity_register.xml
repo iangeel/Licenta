@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="25dp"
     android:gravity="center"
-    android:background="?attr/backgroundcolor">
+    android:background="@drawable/basket_blurred">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,41 +16,44 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginBottom="50dp"
-        android:background="?attr/backgroundcolor">
+        >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/ic_supervisor_account_white_48dp"
-            android:layout_marginBottom="30dp"/>
+            />
 
         <EditText
             android:id="@+id/etUsername_register_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/edit_text_username_email_hit"
-            android:textColorHint="?attr/hintcolor"
-            android:textColor="?attr/textcolor"
-            android:drawableLeft="?attr/usericon"
+            android:fontFamily="@font/octin"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:drawableLeft="@drawable/ic_action_user"
             android:inputType="textEmailAddress"
             />
         <EditText
+            android:fontFamily="@font/octin"
             android:id="@+id/etPassword_register_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/edit_text_password_hit"
-            android:textColorHint="?attr/hintcolor"
-            android:textColor="?attr/textcolor"
-            android:drawableLeft="?attr/passicon"
+            android:textColorHint="@android:color/white"
+            android:textColor="@android:color/white"
+            android:drawableLeft="@drawable/ic_action_pass"
             android:inputType="textPassword"/>
         <EditText
+            android:fontFamily="@font/octin"
             android:id="@+id/etRePassword_register_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/edit_text_RePassword_hit"
-            android:textColor="?attr/textcolor"
-            android:textColorHint="?attr/hintcolor"
-            android:drawableLeft="?attr/passicon"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:drawableLeft="@drawable/ic_action_pass"
             android:inputType="textPassword"/>
 
     </LinearLayout>
@@ -58,8 +61,9 @@
     <Button
         android:id="@+id/btnRegister_register_activity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="46dp"
+        android:background="@drawable/buttonshape_register_me"
         android:text="@string/register_button_register_activity"
-        android:textColor="?attr/textcolor"/>
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

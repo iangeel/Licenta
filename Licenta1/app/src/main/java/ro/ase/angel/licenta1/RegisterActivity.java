@@ -43,9 +43,9 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            setTheme(R.style.darktheme);
+            setTheme(R.style.AppThemeRegister);
         }
-        else setTheme(R.style.AppTheme);
+        else setTheme(R.style.AppThemeRegister);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);

@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity   {
         header_welcome = headerLayout.findViewById(R.id.header_welcome);
 
         firebaseController = FirebaseController.getInstance();
+
         //mqtt start
         startMqtt();
         executorService = Executors.newSingleThreadScheduledExecutor();
