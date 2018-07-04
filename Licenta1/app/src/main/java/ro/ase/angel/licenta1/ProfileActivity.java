@@ -1,9 +1,12 @@
 package ro.ase.angel.licenta1;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,9 +18,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ro.ase.angel.licenta1.Database.FirebaseController;
+import ro.ase.angel.licenta1.Utils.Constants;
 import ro.ase.angel.licenta1.Utils.Records;
 import ro.ase.angel.licenta1.Utils.RecordsAdapter;
 import ro.ase.angel.licenta1.Utils.Users;
@@ -30,6 +36,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseController firebaseController;
     RecordsAdapter adapter;
+    private int lowestValues, highestValue, mediumValue;
+    private List<Integer> pulseList = new ArrayList<>();
 
 
     @Override
@@ -44,6 +52,43 @@ public class ProfileActivity extends AppCompatActivity {
 
         componentsInitialization();
         getRecordsListFromDatabase();
+
+        lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
+                Records myRecord = (Records) parent.getItemAtPosition(position);
+
+                for(int pulseValue : myRecord.getPulse()) {
+                    pulseList.add(pulseValue);
+                }
+
+                Collections.sort(pulseList);
+
+                for(int pulseV : pulseList) {
+                    if(pulseV > 50) {
+                        lowestValues = pulseV;
+                        break;
+                    }
+                }
+
+                highestValue = pulseList.get(pulseList.size() - 1);
+
+                int sum = 0;
+                int underFifty = 0;
+                for(int pulseV : pulseList) {
+                    if(pulseV > 50) {
+                        sum += pulseV;
+                    } else underFifty++;
+                }
+                mediumValue = sum / (pulseList.size() - underFifty);
+
+                int[] valuesOfInterest = new int[] {lowestValues, mediumValue, highestValue};
+
+                intent.putExtra(Constants.VALUES_OF_INTEREST, valuesOfInterest);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -119,7 +119,7 @@
                 android:layout_alignTop="@id/progressBarSpeed"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
-                android:text="15"
+                android:text="?"
                 android:fontFamily="@font/octin"
                 android:textColor="@color/colorAccent"
                 android:textSize="40dp" />
@@ -157,27 +157,28 @@
 
             <ImageView
                 android:id="@+id/ivStartRecord"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:layout_marginRight="6dp"
                 android:background="?attr/backgroundcolor"
-                android:src="@drawable/recordbutton" />
+                android:src="@drawable/play" />
 
             <ImageView
                 android:id="@+id/ivPauseRecord"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
                 android:background="?attr/backgroundcolor"
-                android:src="@drawable/pause" />
+                android:src="@drawable/pause1" />
 
             <ImageView
                 android:id="@+id/ivStopRecord"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:layout_marginLeft="6dp"
-                android:background="?attr/backgroundcolor" />
+                android:background="?attr/backgroundcolor"
+                android:src="@drawable/stop1"/>
 
         </LinearLayout>
 

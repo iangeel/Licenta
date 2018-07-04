@@ -46,13 +46,16 @@ public class RecordsAdapter extends ArrayAdapter{
         Records records = objects.get(position);
 
         int sum = 0;
+        int underFifty = 0;
         
        //tvPulse.setText(records != null && records.getPulse() != null ? records.getPulse().toString() : "");
         if(records != null && records.getPulse() != null) {
             for(int pulseValue : records.getPulse()) {
-                sum += pulseValue;
+                if(pulseValue > 50) {
+                    sum += pulseValue;
+                } else underFifty++;
             }
-            String medie = Integer.toString(sum / records.getPulse().toArray().length);
+            String medie = Integer.toString(sum / (records.getPulse().toArray().length - underFifty));
             tvPulse.setText(medie);
 
         }

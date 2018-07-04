@@ -27,7 +27,7 @@ public class MqttHelper {
     final String serverUri = "tcp://m23.cloudmqtt.com:13090";
 
     final String clientId = "AndroidClient";
-    final String pulseConfirmationTopic = "/tests/confirm";
+    final String pulseConfirmationTopic = "/tests/#";
 
     final String username = "ycstaqvf";
     final String password = "mcv2ILaYwu0f";
@@ -116,6 +116,27 @@ public class MqttHelper {
             MqttMessage mqttMessage = new MqttMessage(encodedPayload);
             mqttClient.publish(topic, mqttMessage);
         } catch (UnsupportedEncodingException | MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void disconnectMqtt() {
+
+        try {
+            IMqttToken disconToken = mqttClient.disconnect();
+            disconToken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Log.i("MQTT_DC", "Disconnected.");
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken,
+                                      Throwable exception) {
+                    Log.i("MQTT_DC", "Fail.");
+                }
+            });
+        } catch (MqttException e) {
             e.printStackTrace();
         }
     }

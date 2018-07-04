@@ -66,8 +66,10 @@ public class MainActivity extends AppCompatActivity   {
     Timer timer;
     TimerTask doThis;
     public static List<Integer> pulseValuesRetrivedFromServer = new ArrayList<>();
+    public static List<Float> speedValuesRetrivedFromServer = new ArrayList<>();
     ChartHelper chartHelper;
     LineChart lineChart;
+    private boolean stopMqttClinet = false;
 
 
     @Override
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity   {
 
                 }
 
+
                     int delay = 0;
                     int period = 5000;
                     doThis = new TimerTask() {
@@ -144,6 +147,24 @@ public class MainActivity extends AppCompatActivity   {
         });
 
         ivPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(progressBarPulse != null && progressBarSpeed != null) {
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        RotateDrawable rotateDrawable = (RotateDrawable) progressBarPulse.getIndeterminateDrawable();
+                        rotateDrawable.setToDegrees(-90);
+                        RotateDrawable rotateDrawable2 = (RotateDrawable) progressBarSpeed.getIndeterminateDrawable();
+                        rotateDrawable2.setToDegrees(-90);
+                    }
+                }
+
+                timer.cancel();
+
+
+            }
+        });
+
+        ivStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(progressBarPulse != null && progressBarSpeed != null) {
@@ -289,7 +310,7 @@ public class MainActivity extends AppCompatActivity   {
 
 
     private void startMqtt() {
-        mqttHelper = new MqttHelper(this.getApplicationContext());
+        mqttHelper = new MqttHelper(getApplicationContext());
         mqttHelper.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
@@ -299,9 +320,14 @@ public class MainActivity extends AppCompatActivity   {
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.d("MQTT_message",message.toString());
-                tvBPM.setText(message.toString());
-                pulseValuesRetrivedFromServer.add(Integer.parseInt(message.toString()));
-                chartHelper.addEntry(Float.valueOf(message.toString()));
+                if(topic.equals("/tests/confirm")) {
+                    tvBPM.setText(message.toString());
+                    pulseValuesRetrivedFromServer.add(Integer.parseInt(message.toString()));
+                    chartHelper.addEntry(Float.valueOf(message.toString()));
+                } else if(topic.equals("/tests/speed")) {
+                    tvSpeed.setText(message.toString());
+                    speedValuesRetrivedFromServer.add(Float.parseFloat(message.toString()));
+                }
             }
 
             @Override
@@ -314,9 +340,10 @@ public class MainActivity extends AppCompatActivity   {
 
     private void addRecords() {
 
-        Records record = new Records(pulseValuesRetrivedFromServer, 30f, 120L, userGlobalId);
-        firebaseController.addRecord(record);
-
+        if(pulseValuesRetrivedFromServer != null || !(pulseValuesRetrivedFromServer.isEmpty())) {
+            Records record = new Records(pulseValuesRetrivedFromServer, 30f, 120L, userGlobalId);
+            firebaseController.addRecord(record);
+        }
     }
 
     private void debugging() {

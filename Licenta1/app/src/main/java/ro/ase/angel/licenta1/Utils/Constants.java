@@ -22,7 +22,7 @@ public interface Constants {
     String IS_LOGIN = "IsLoggedIn";
     String KEY_USERNAME = "username";
 
-
+    String VALUES_OF_INTEREST = "ValuesOfInterest";
 
 
 }
