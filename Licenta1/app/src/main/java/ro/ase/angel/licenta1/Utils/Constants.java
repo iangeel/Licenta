@@ -24,5 +24,8 @@ public interface Constants {
 
     String VALUES_OF_INTEREST = "ValuesOfInterest";
 
+    String FIELD_HEIGHT = "field_height";
+    String FIELD_WIDTH = "field_width";
+
 
 }

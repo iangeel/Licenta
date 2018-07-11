@@ -35,4 +35,5 @@
     <string name="tv_lowest_value">Lowest value registered:</string>
     <string name="tv_medium_value">Medium value registered:</string>
     <string name="tv_highest_value">Highest value registered:</string>
+    <string name="btnSave">Save</string>
 </resources>
