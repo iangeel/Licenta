@@ -1,6 +1,7 @@
 package ro.ase.angel.licenta1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.RotateDrawable;
 import android.os.Build;
 import android.os.Handler;
@@ -46,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 import ro.ase.angel.licenta1.Chart.ChartHelper;
 import ro.ase.angel.licenta1.Database.FirebaseController;
 import ro.ase.angel.licenta1.MqttConnection.MqttHelper;
+import ro.ase.angel.licenta1.Utils.Constants;
 import ro.ase.angel.licenta1.Utils.Records;
 import ro.ase.angel.licenta1.Utils.SessionManagement;
 
@@ -67,9 +69,17 @@ public class MainActivity extends AppCompatActivity   {
     TimerTask doThis;
     public static List<Integer> pulseValuesRetrivedFromServer = new ArrayList<>();
     public static List<Float> speedValuesRetrivedFromServer = new ArrayList<>();
+    public static List<Double> latitudeValuesRetrivedFromServer = new ArrayList<>();
+    public static List<Double> longitudeValuesRetrivedFromServer = new ArrayList<>();
     ChartHelper chartHelper;
     LineChart lineChart;
     private boolean stopMqttClinet = false;
+
+    double[] coordinatesArray;
+    public static double Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
+    SharedPreferences prefs;
+    final double r_earth = 6378000;
+    final double pi = 3.14;
 
 
     @Override
@@ -178,6 +188,8 @@ public class MainActivity extends AppCompatActivity   {
 
                 timer.cancel();
                 addRecords();
+                tvBPM.setText("?");
+                tvSpeed.setText("?");
 
             }
         });
@@ -250,6 +262,22 @@ public class MainActivity extends AppCompatActivity   {
         }
 
 
+        prefs = getPreferences(MODE_PRIVATE);
+
+        if(getIntent().getDoubleArrayExtra(Constants.COORDINATES_ARRAY) != null) {
+            coordinatesArray = getIntent().getDoubleArrayExtra(Constants.COORDINATES_ARRAY);
+            Bx = coordinatesArray[1];
+            By = coordinatesArray[0];
+
+            if (Bx != 0 && By != 0) {
+                calculateFieldCoordinates();
+                Toast.makeText(getApplicationContext(), "A(" + Ax + ", " + Ay + ")", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "B(" + Bx + ", " + By + ")", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "C(" + Cx + ", " + Cx + ")", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "D(" + Dx + ", " + Dy + ")", Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 
     @Override
@@ -321,12 +349,28 @@ public class MainActivity extends AppCompatActivity   {
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 Log.d("MQTT_message",message.toString());
                 if(topic.equals("/tests/confirm")) {
-                    tvBPM.setText(message.toString());
-                    pulseValuesRetrivedFromServer.add(Integer.parseInt(message.toString()));
-                    chartHelper.addEntry(Float.valueOf(message.toString()));
+                    if(!(message.toString().isEmpty()) && !(message.toString().equals(null)) &&
+                            (Integer.parseInt(message.toString()) > 0)) {
+                        tvBPM.setText(message.toString());
+                        pulseValuesRetrivedFromServer.add(Integer.parseInt(message.toString()));
+                        chartHelper.addEntry(Float.valueOf(message.toString()));
+                    }
                 } else if(topic.equals("/tests/speed")) {
-                    tvSpeed.setText(message.toString());
-                    speedValuesRetrivedFromServer.add(Float.parseFloat(message.toString()));
+                    if(!(message.toString().isEmpty()) && !(message.toString().equals(null)) &&
+                            (Float.parseFloat(message.toString()) > 0)) {
+                        tvSpeed.setText(message.toString());
+                        speedValuesRetrivedFromServer.add(Float.parseFloat(message.toString()));
+                    }
+                } else if(topic.equals("/tests/coordinates/latitude")) {
+                    if(!(message.toString().isEmpty()) && !(message.toString().equals(null)) &&
+                            (Double.parseDouble(message.toString()) > 0)) {
+                        latitudeValuesRetrivedFromServer.add(Double.parseDouble(message.toString()));
+                    }
+                } else if(topic.equals("/tests/coordinates/longitude")) {
+                    if(!(message.toString().isEmpty()) && !(message.toString().equals(null)) &&
+                            (Double.parseDouble(message.toString()) > 0)) {
+                        longitudeValuesRetrivedFromServer.add(Double.parseDouble(message.toString()));
+                    }
                 }
             }
 
@@ -341,9 +385,30 @@ public class MainActivity extends AppCompatActivity   {
     private void addRecords() {
 
         if(pulseValuesRetrivedFromServer != null || !(pulseValuesRetrivedFromServer.isEmpty())) {
-            Records record = new Records(pulseValuesRetrivedFromServer, 30f, 120L, userGlobalId);
+            Records record = new Records(pulseValuesRetrivedFromServer, speedValuesRetrivedFromServer, 120L,
+                    latitudeValuesRetrivedFromServer, longitudeValuesRetrivedFromServer, userGlobalId);
             firebaseController.addRecord(record);
         }
+    }
+
+    private void calculateFieldCoordinates() {
+
+        /*
+        new_latitude  = latitude  + (dy / r_earth) * (180 / pi);
+        new_longitude = longitude + (dx / r_earth) * (180 / pi) / cos(latitude * pi/180);
+         */
+
+        int fieldHeight = prefs.getInt(Constants.FIELD_HEIGHT, 15);
+        int fieldWidth = prefs.getInt(Constants.FIELD_WIDTH, 25);
+
+        Ay  = By;
+        Ax = Bx + (fieldWidth / r_earth) * (180 / pi) / Math.cos(By * pi/180);
+
+        Cx = Bx;
+        Cy = By + (fieldHeight / r_earth) * (180 /pi);
+
+        Dy = Cy;
+        Dx = Ax;
     }
 
     private void debugging() {

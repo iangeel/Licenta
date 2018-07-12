@@ -13,7 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class Records implements Parcelable {
     private String globalId;
     private List<Integer> pulse;
-    private Float speed;
+    private List<Float> speed;
+    private List<Double> latitudes;
+    private List<Double> longitudes;
     private Long time;
     private String userGlobalId;
 
@@ -23,21 +25,24 @@ public class Records implements Parcelable {
 
 
 
-    public Records(List<Integer> pulse, Float speed) {
+    public Records(List<Integer> pulse, List<Float> speed) {
         this.pulse = pulse;
         this.speed = speed;
     }
 
-    public Records(List<Integer> pulse, Float speed, Long time) {
+    public Records(List<Integer> pulse, List<Float> speed, Long time) {
         this.pulse = pulse;
         this.speed = speed;
         this.time = time;
     }
 
-    public Records(List<Integer> pulse, Float speed, Long time, String userGlobalId) {
+    public Records(List<Integer> pulse, List<Float> speed, Long time, List<Double> latitudes,
+                   List<Double> longitudes, String userGlobalId) {
         this.pulse = pulse;
         this.speed = speed;
         this.time = time;
+        this.latitudes = latitudes;
+        this.longitudes = longitudes;
         this.userGlobalId = userGlobalId;
     }
 
@@ -50,8 +55,10 @@ public class Records implements Parcelable {
 
     public Records(Parcel parcel) {
         this.pulse = parcel.readArrayList(Integer.class.getClassLoader());
-        this.speed = parcel.readFloat();
+        this.speed = parcel.readArrayList(Float.class.getClassLoader());
         this.time = parcel.readLong();
+        this.latitudes = parcel.readArrayList(Double.class.getClassLoader());
+        this.longitudes = parcel.readArrayList(Double.class.getClassLoader());
     }
 
     public String getUserGlobalId() {
@@ -70,11 +77,11 @@ public class Records implements Parcelable {
         this.pulse = pulse;
     }
 
-    public Float getSpeed() {
+    public List<Float> getSpeed() {
         return speed;
     }
 
-    public void setSpeed(Float speed) {
+    public void setSpeed(List<Float> speed) {
         this.speed = speed;
     }
 
@@ -94,6 +101,21 @@ public class Records implements Parcelable {
         this.globalId = globalId;
     }
 
+    public List<Double> getLatitudes() {
+        return latitudes;
+    }
+
+    public void setLatitudes(List<Double> latitudes) {
+        this.latitudes = latitudes;
+    }
+
+    public List<Double> getLongitudes() {
+        return longitudes;
+    }
+
+    public void setLongitudes(List<Double> longitudes) {
+        this.longitudes = longitudes;
+    }
 
     public String timeFormat(Long millis) {
         return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
@@ -121,7 +143,9 @@ public class Records implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeList(this.pulse);
-        parcel.writeFloat(this.speed);
+        parcel.writeList(this.speed);
         parcel.writeLong(this.time);
+        parcel.writeList(this.latitudes);
+        parcel.writeList(this.longitudes);
     }
 }

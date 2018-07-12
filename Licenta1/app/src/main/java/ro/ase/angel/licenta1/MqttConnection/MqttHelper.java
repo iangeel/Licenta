@@ -120,6 +120,20 @@ public class MqttHelper {
         }
     }
 
+    public void publishMqttFieldTopic() {
+        String topic = "/tests/pulse";
+        String payload = "2";
+        byte[] encodedPayload = new byte[0];
+
+        try {
+            encodedPayload = payload.getBytes("UTF-8");
+            MqttMessage mqttMessage = new MqttMessage(encodedPayload);
+            mqttClient.publish(topic, mqttMessage);
+        } catch (UnsupportedEncodingException | MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void disconnectMqtt() {
 
         try {

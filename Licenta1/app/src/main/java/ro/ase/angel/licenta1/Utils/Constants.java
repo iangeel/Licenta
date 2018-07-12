@@ -27,5 +27,7 @@ public interface Constants {
     String FIELD_HEIGHT = "field_height";
     String FIELD_WIDTH = "field_width";
 
+    String COORDINATES_ARRAY = "CoordArray";
+
 
 }

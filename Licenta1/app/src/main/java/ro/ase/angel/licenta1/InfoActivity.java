@@ -41,4 +41,11 @@ public class InfoActivity extends AppCompatActivity {
         mediumValueTV.setText(Integer.toString(mediumValue));
         highestValueTV.setText(Integer.toString(highestValue));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(intent);
+    }
 }
