@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity   {
     final double r_earth = 6378000;
     final double pi = 3.14;
 
+    long clock = 0L;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity   {
                         @Override
                         public void run() {
                             mqttHelper.publishMqttPulseTopic();
+                            clock += 5000;
                         }
                     };
                     timer = new Timer();
@@ -389,7 +392,7 @@ public class MainActivity extends AppCompatActivity   {
     private void addRecords() {
 
         if(pulseValuesRetrivedFromServer != null && !(pulseValuesRetrivedFromServer.isEmpty())) {
-            Records record = new Records(pulseValuesRetrivedFromServer, speedValuesRetrivedFromServer, 120L,
+            Records record = new Records(pulseValuesRetrivedFromServer, speedValuesRetrivedFromServer, clock,
                     latitudeValuesRetrivedFromServer, longitudeValuesRetrivedFromServer, userGlobalId);
             firebaseController.addRecord(record);
         }

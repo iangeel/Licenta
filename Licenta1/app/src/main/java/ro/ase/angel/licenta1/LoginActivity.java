@@ -345,33 +345,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendPasswordResetEmail() {
-        if(TextUtils.isEmpty(etUsername.getText().toString())) {
+
+
+
+        if(!(TextUtils.isEmpty(etUsername.getText()))) {
+            mAuth.sendPasswordResetEmail(etUsername.getText().toString())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                tvError.setText("Check your e-mail");
+                                tvError.setTextColor(getResources().getColor(R.color.green));
+                                tvError.setError("Check your e-mail");
+                                try {
+                                    Thread.sleep(5000);
+                                    tvError.setError(null);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                Log.w(RESET_TAG, "passwordResetEmail:failure");
+                            }
+                        }
+                    });
+        }
+        else {
             tvError.setText("Enter your e-mail");
             tvError.setTextColor(getResources().getColor(R.color.orange));
             tvError.setError("Enter your e-mail");
         }
-        tvError.setError(null);
-
-        mAuth.sendPasswordResetEmail(etUsername.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
-                            tvError.setText("Check your e-mail");
-                            tvError.setTextColor(getResources().getColor(R.color.green));
-                            tvError.setError("Check your e-mail");
-                            try {
-                                Thread.sleep(5000);
-                                tvError.setError(null);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        else {
-                            Log.w(RESET_TAG, "passwordResetEmail:failure");
-                        }
-                    }
-                });
     }
 }
 

@@ -28,6 +28,7 @@ public interface Constants {
     String FIELD_WIDTH = "field_width";
 
     String COORDINATES_ARRAY = "CoordArray";
+    String MAP_ARRAY = "MapArray";
 
 
 }

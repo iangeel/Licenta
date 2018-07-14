@@ -59,10 +59,22 @@ public class RecordsAdapter extends ArrayAdapter{
             tvPulse.setText(medie);
 
         }
-        else tvPulse.setText("");
-        tvSpeed.setText(records != null && records.getSpeed() != null ? records.getSpeed().toString() : "");
+        else tvPulse.setText("?");
+
+        float speedSum = 0;
+
+        if(records != null && records.getSpeed() != null) {
+            for(float speedValue : records.getSpeed()) {
+                speedSum += speedValue;
+            }
+            String medieSpeed = Float.toString(speedSum / (records.getSpeed().toArray().length));
+            tvSpeed.setText(medieSpeed);
+        }
+        else tvSpeed.setText("?");
+
         tvTime.setText(records != null && records.getTime() != null ? records.timeFormat(records.getTime()) : "");
 
+        
 
         return row;
     }

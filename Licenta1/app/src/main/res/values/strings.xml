@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Licenta1</string>
-    <string name="tvLogo">FUTBEAT</string>
+    <string name="tvLogo">SportBeat</string>
     <string name="nav_profile_title">Profile</string>
     <string name="nav_setting_title">Settings</string>
     <string name="nav_help_title">Help</string>
@@ -27,7 +27,7 @@
     <string name="pulse">Pulse</string>
     <string name="speed">Speed</string>
     <string name="tvTime">Time</string>
-    <string name="tvMin">Min</string>
+    <string name="tvMin">hh:mm:ss</string>
     <string name="pulseNA">N/A</string>
 
     <string name="facebook_app_id">246304895913197</string>
@@ -43,4 +43,9 @@
     <string name="tv_medium_speed">Medium speed value:</string>
     <string name="tv_highest_speed">Highest speed value:</string>
     <string name="btnCoordinates_show">my track</string>
+
+    <string name="google_maps_API_key">AIzaSyCGj4kJKDtA1MqLWg9RwmXEl4sZZqUu84A</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="help_text">This page was created to help you to understand how the application works by providing some informations about the concept on which the app is based and the technologies used in the development process.</string>
+    <string name="question_mark_tv">Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea, când un tipograf anonim a luat o planşetă de litere şi le-a amestecat pentru a crea o carte demonstrativă pentru literele respective.</string>
 </resources>
