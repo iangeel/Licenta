@@ -32,11 +32,15 @@
 
     <string name="facebook_app_id">246304895913197</string>
     <string name="fb_login_protocol_scheme">fb246304895913197</string>
-    <string name="tv_lowest_value">Lowest value registered:</string>
-    <string name="tv_medium_value">Medium value registered:</string>
-    <string name="tv_highest_value">Highest value registered:</string>
+    <string name="tv_lowest_value">Lowest pulse value:</string>
+    <string name="tv_medium_value">Medium pulse value:</string>
+    <string name="tv_highest_value">Highest pulse value:</string>
     <string name="btnSave">Save</string>
     <string name="fieldSizeQuestion">To calculate the size of the field move to the right corner of the opponent team and press OK.</string>
     <string name="btnOkPopup">OK</string>
     <string name="btnNoPopup">No thanks!</string>
+    <string name="tv_lowest_speed">Lowest speed value:</string>
+    <string name="tv_medium_speed">Medium speed value:</string>
+    <string name="tv_highest_speed">Highest speed value:</string>
+    <string name="btnCoordinates_show">my track</string>
 </resources>

@@ -188,6 +188,10 @@ public class MainActivity extends AppCompatActivity   {
 
                 timer.cancel();
                 addRecords();
+                pulseValuesRetrivedFromServer.clear();
+                speedValuesRetrivedFromServer.clear();
+                latitudeValuesRetrivedFromServer.clear();
+                longitudeValuesRetrivedFromServer.clear();
                 tvBPM.setText("?");
                 tvSpeed.setText("?");
 
@@ -384,7 +388,7 @@ public class MainActivity extends AppCompatActivity   {
 
     private void addRecords() {
 
-        if(pulseValuesRetrivedFromServer != null || !(pulseValuesRetrivedFromServer.isEmpty())) {
+        if(pulseValuesRetrivedFromServer != null && !(pulseValuesRetrivedFromServer.isEmpty())) {
             Records record = new Records(pulseValuesRetrivedFromServer, speedValuesRetrivedFromServer, 120L,
                     latitudeValuesRetrivedFromServer, longitudeValuesRetrivedFromServer, userGlobalId);
             firebaseController.addRecord(record);
@@ -401,11 +405,18 @@ public class MainActivity extends AppCompatActivity   {
         int fieldHeight = prefs.getInt(Constants.FIELD_HEIGHT, 15);
         int fieldWidth = prefs.getInt(Constants.FIELD_WIDTH, 25);
 
+        int fieldHeightKm = fieldHeight / 1000;
+        int fieldWidthKm = fieldWidth / 1000;
+
+        double fieldHeightDegree = (fieldHeightKm / 40000) * 360;
+        double fieldWidthDegree = (fieldWidthKm / 40000) * 360;
+
         Ay  = By;
-        Ax = Bx + (fieldWidth / r_earth) * (180 / pi) / Math.cos(By * pi/180);
+        //Ax = Bx + (fieldWidth / r_earth) * (180 / pi) / Math.cos(By * pi/180);
+        Ax = Bx - ( fieldWidthDegree * Math.cos(2 * pi));
 
         Cx = Bx;
-        Cy = By + (fieldHeight / r_earth) * (180 /pi);
+        Cy = By - (fieldHeightDegree * Math.sin(pi / 2));
 
         Dy = Cy;
         Dx = Ax;

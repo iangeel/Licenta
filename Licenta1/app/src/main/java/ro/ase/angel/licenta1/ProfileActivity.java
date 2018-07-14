@@ -1,12 +1,14 @@
 package ro.ase.angel.licenta1;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +29,7 @@ import ro.ase.angel.licenta1.Utils.Constants;
 import ro.ase.angel.licenta1.Utils.Records;
 import ro.ase.angel.licenta1.Utils.RecordsAdapter;
 import ro.ase.angel.licenta1.Utils.Users;
+import ro.ase.angel.licenta1.Utils.ValuesOfInterest;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -37,7 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseController firebaseController;
     RecordsAdapter adapter;
     private int lowestValues, highestValue, mediumValue;
+    private float lowestSpeedV, highestSpeedV, mediumSpeedV;
     private List<Integer> pulseList = new ArrayList<>();
+    private List<Float> speedList = new ArrayList<>();
+
+    ImageView ivNoRecords;
+    ValuesOfInterest valuesOfInterest;
 
 
     @Override
@@ -53,37 +61,48 @@ public class ProfileActivity extends AppCompatActivity {
         componentsInitialization();
         getRecordsListFromDatabase();
 
+
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if(adapter.getCount() != 0) {
+                    ivNoRecords.setVisibility(View.GONE);
+                }
+            }
+        });
+
         lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
                 Records myRecord = (Records) parent.getItemAtPosition(position);
 
+                //////////// PULSE VALUES ///////////////////////
                 for(int pulseValue : myRecord.getPulse()) {
                     pulseList.add(pulseValue);
                 }
+                calculatePulseValuesOfInterest();
 
-                Collections.sort(pulseList);
 
-                for(int pulseV : pulseList) {
-                    if(pulseV > 50) {
-                        lowestValues = pulseV;
-                        break;
+
+                //////////// SPEED VALUES //////////////////////
+                if(myRecord.getSpeed() != null && myRecord.getSpeed().size() > 0) {
+                    for (float speedValue : myRecord.getSpeed()) {
+                        speedList.add(speedValue);
                     }
+                    calculateSpeedValuesOfInterest();
+                } else {
+                    lowestSpeedV = 99.9f;
+                    mediumSpeedV = 99.9f;
+                    highestSpeedV = 99.9f;
                 }
 
-                highestValue = pulseList.get(pulseList.size() - 1);
+                int[] pulseValueOfInterest = new int[] {lowestValues, mediumValue, highestValue};
+                float[] speedValuesOfInterest = new float[] {lowestSpeedV, mediumSpeedV, highestSpeedV};
 
-                int sum = 0;
-                int underFifty = 0;
-                for(int pulseV : pulseList) {
-                    if(pulseV > 50) {
-                        sum += pulseV;
-                    } else underFifty++;
-                }
-                mediumValue = sum / (pulseList.size() - underFifty);
-
-                int[] valuesOfInterest = new int[] {lowestValues, mediumValue, highestValue};
+                valuesOfInterest = new ValuesOfInterest(pulseValueOfInterest, speedValuesOfInterest,
+                        myRecord.getLatitudes(), myRecord.getLongitudes());
 
                 intent.putExtra(Constants.VALUES_OF_INTEREST, valuesOfInterest);
                 startActivity(intent);
@@ -105,6 +124,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         lvRecords.setAdapter(adapter);
 
+        ivNoRecords = findViewById(R.id.ivNoRecords);
+
+
 
     }
 
@@ -114,6 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseController.findAllRecords(uploadRecordsFromDatabaseGlobal(), user.getUid());
 
         adapter.notifyDataSetChanged();
+
     }
 
     private ValueEventListener uploadRecordsFromDatabaseGlobal() {
@@ -147,5 +170,44 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void calculatePulseValuesOfInterest() {
+        Collections.sort(pulseList);
+
+        for(int pulseV : pulseList) {
+            if(pulseV > 50) {
+                lowestValues = pulseV;
+                break;
+            }
+        }
+
+        highestValue = pulseList.get(pulseList.size() - 1);
+
+        int sum = 0;
+        int underFifty = 0;
+        for(int pulseV : pulseList) {
+            if(pulseV > 50) {
+                sum += pulseV;
+            } else underFifty++;
+        }
+        mediumValue = sum / (pulseList.size() - underFifty);
+    }
+
+    private void calculateSpeedValuesOfInterest() {
+        Collections.sort(speedList);
+
+        for(float speedV : speedList) {
+            lowestSpeedV = speedV;
+            break;
+        }
+
+        highestSpeedV = speedList.get(speedList.size() - 1);
+
+        int sum = 0;
+        for(float speedV : speedList) {
+            sum += speedV;
+        }
+
+        mediumSpeedV = sum / speedList.size();
+    }
 
 }

@@ -7,6 +7,13 @@
     tools:context="ro.ase.angel.licenta1.ProfileActivity"
     android:background="?attr/backgroundcolor">
 
+    <ImageView
+        android:id="@+id/ivNoRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/result_not_found"
+        android:visibility="visible"/>
+
 
     <ListView
         android:id="@+id/lvRecords"
@@ -16,5 +23,7 @@
         >
 
     </ListView>
+
+
 
 </LinearLayout>

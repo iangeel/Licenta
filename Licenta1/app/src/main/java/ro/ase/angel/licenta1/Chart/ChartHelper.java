@@ -15,6 +15,8 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
+import ro.ase.angel.licenta1.R;
+
 /**
  * Created by ANGEL on 6/18/2018.
  */
@@ -39,7 +41,7 @@ public class ChartHelper implements OnChartValueSelectedListener {
         this.lineChart.setPinchZoom(true);
 
         //background alternativ
-        this.lineChart.setBackgroundColor(Color.WHITE);
+       // this.lineChart.setBackgroundColor(Color.WHITE);
         this.lineChart.setBorderColor(Color.BLACK);
 
         LineData lineData = new LineData();
@@ -104,14 +106,14 @@ public class ChartHelper implements OnChartValueSelectedListener {
     }
 
     private LineDataSet createNewSet() {
-        LineDataSet set = new LineDataSet(null, "Data");
+        LineDataSet set = new LineDataSet(null, "Pulse values");
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set.setColor(Color.BLACK);
+        set.setColor(Color.GREEN);
         set.setLineWidth(2f);
         set.setFillAlpha(65);
-        set.setFillColor(Color.BLACK);
-        set.setHighLightColor(Color.BLACK);
-        set.setValueTextColor(Color.BLACK);
+        set.setFillColor(Color.GREEN);
+        set.setHighLightColor(Color.GREEN);
+        set.setValueTextColor(Color.GREEN);
         set.setValueTextSize(9f);
         set.setDrawValues(false);
         return set;
