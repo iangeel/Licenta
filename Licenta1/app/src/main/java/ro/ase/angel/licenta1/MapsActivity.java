@@ -1,5 +1,6 @@
 package ro.ase.angel.licenta1;
 
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -8,16 +9,27 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.Arrays;
+import java.util.List;
 
 import ro.ase.angel.licenta1.Utils.Constants;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity
+        implements OnMapReadyCallback, GoogleMap.OnPolylineClickListener {
 
     private GoogleMap mMap;
 
     private double[] myCoordinates;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +63,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng startPoint = new LatLng(myCoordinates[0], myCoordinates[1]);
+//        LatLng finishPoint = new LatLng(myCoordinates[myCoordinates.length - 1], myCoordinates[myCoordinates.length]);
+
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.clickable(true);
+
+        LatLng mCoord;
+
+        for(int i = 0 ; i<myCoordinates.length;i++) {
+          if(i % 2 == 0) {
+              mCoord = new LatLng(myCoordinates[i], myCoordinates[i+1]);
+              polylineOptions.add(mCoord);
+          }
+        }
+
+        polylineOptions.width(5).color(Color.RED).geodesic(true);
+        googleMap.addPolyline(polylineOptions);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint,13));
+        //googleMap.setOnPolylineClickListener(this);
+
+    }
+
+    @Override
+    public void onPolylineClick(Polyline polyline) {
+
     }
 }
