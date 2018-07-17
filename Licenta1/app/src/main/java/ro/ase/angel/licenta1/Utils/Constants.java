@@ -30,5 +30,17 @@ public interface Constants {
     String COORDINATES_ARRAY = "CoordArray";
     String MAP_ARRAY = "MapArray";
 
+    String COORDINATES_PREFFS = "coordinatesPrefs";
+    String FIELD_SETTINGS = "fieldSettings";
+
+    String FIELD_AX = "Ax";
+    String FIELD_AY = "Ay";
+    String FIELD_BX = "Bx";
+    String FIELD_BY = "By";
+    String FIELD_CX = "Cx";
+    String FIELD_CY = "Cy";
+    String FIELD_DX = "Dx";
+    String FIELD_DY = "Dy";
+
 
 }

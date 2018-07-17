@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Licenta1</string>
+    <string name="app_name">SportBeat</string>
     <string name="tvLogo">SportBeat</string>
     <string name="nav_profile_title">Profile</string>
     <string name="nav_setting_title">Settings</string>
@@ -47,5 +47,14 @@
     <string name="google_maps_API_key">AIzaSyCGj4kJKDtA1MqLWg9RwmXEl4sZZqUu84A</string>
     <string name="title_activity_maps">Map</string>
     <string name="help_text">This page was created to help you to understand how the application works by providing some informations about the concept on which the app is based and the technologies used in the development process.</string>
-    <string name="question_mark_tv">Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea, când un tipograf anonim a luat o planşetă de litere şi le-a amestecat pentru a crea o carte demonstrativă pentru literele respective.</string>
+    <string name="question_mark_tv">The applications purpose is to offer
+        its users the possibility to monitorize one of their most
+        important health parameter in real time and to get informations
+        about their speed during the game or cardio. Furthermore, the user
+        is able to see in which part of the field he played most of the time,
+        by selecting the court's dimensions from Settings before starting the
+        record. All of these will help an amateur sportsman to progress and to keep
+        an eye on his health level without needing a professional support.</string>
+    <string name="arduino_tv">Both gps and pulse sensors are integrated on an Arduino Uno alike board, named WeMos D1-R2, which uses as a microcontroller, unlike Arduino, an ESP8266-WiFi module. The board will connect to the phone\'s hotspot whenever it detects it and will be worn as a chest belt while the pulse sensor will be placed on the user\'s ear lobe.</string>
+    <string name="android_tv">The application is the user\'s way to communicate with the chest belt (board). Right after running it, the user will have to authentificate himself and only after this he will be able to start recording data. On the main activity, while or after recording, the user will be able to see bpm values displayed on a real-time graph. To access his records history, the users have to select Profile from apps menu. There he will have the possibility to visualize each record and to get more information about it. Furthermore, if he was recording a cardio activity (running or biking), he can see his route by selecting My Track button from Info Activity.</string>
 </resources>

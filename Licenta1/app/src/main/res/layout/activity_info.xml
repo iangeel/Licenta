@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context="ro.ase.angel.licenta1.InfoActivity"
     android:orientation="vertical"
-    android:padding="25dp">
+    android:padding="25dp"
+    android:background="@drawable/mygradient">
 
     <!-- ////////////// PULSE /////////////////// -->
 
@@ -198,8 +199,6 @@
 
 
 
-    </LinearLayout>
-
     <ScrollView
         android:layout_gravity="center"
         android:layout_width="match_parent"
@@ -216,6 +215,41 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical">
+
+              <LinearLayout
+                  android:layout_marginTop="5dp"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:gravity="center"
+                  android:layout_marginBottom="-30dp"
+                  >
+
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Your position during the game"
+                      android:textColor="@android:color/holo_orange_dark"
+                      android:textStyle="bold"
+                      android:layout_marginBottom="5dp"
+                      android:layout_marginRight="55.5dp"/>
+
+                  <TextView
+                      android:id="@+id/tvPlayerType"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+
+                  <ImageView
+                      android:id="@+id/footbalCourt"
+                      android:layout_marginTop="-50dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+
+
+
+
+              </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -1085,4 +1119,5 @@
 
 
 
+</LinearLayout>
 </LinearLayout>

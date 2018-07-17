@@ -200,13 +200,16 @@ public class LoginActivity extends AppCompatActivity {
                         etPassword.setText(password);
                     }
                 } else {
-                    Toast.makeText(this,"Data null", Toast.LENGTH_SHORT).show();
+
+                    Log.e("Data_retrived", "Data null");
                 }
             } else {
-                Toast.makeText(this,"Result code error", Toast.LENGTH_SHORT).show();
+
+                Log.e("Result_code", "Result code error");
             }
         } else {
-            Toast.makeText(this,"Request code error", Toast.LENGTH_SHORT).show();
+
+            Log.e("Request_code","Request code error");
         }
     }
 
@@ -285,8 +288,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             btnFacebook.setEnabled(true);
 
-                            Toast.makeText(LoginActivity.this, "Auth fail...",
-                                    Toast.LENGTH_SHORT).show();
+
 
                         }
 

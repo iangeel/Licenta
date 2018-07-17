@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context="ro.ase.angel.licenta1.SettingsActivity"
     android:orientation="vertical"
-    android:padding="25dp">
+    android:padding="25dp"
+    android:background="@drawable/mygradient">
 
     <TextView
         android:layout_width="wrap_content"
@@ -106,8 +107,11 @@
         <Button
             android:id="@+id/btnCalculateSize"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calculate"/>
+            android:layout_height="35dp"
+            android:text="Calculate"
+            android:textSize="12dp"
+            android:textColor="@color/primaryThemeColor"
+            android:background="@drawable/buttonshape_calculate_start"/>
 
     </LinearLayout>
 

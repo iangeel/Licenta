@@ -41,9 +41,9 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            setTheme(R.style.darktheme);
+            setTheme(R.style.AppThemeInfo);
         }
-        else setTheme(R.style.AppTheme);
+        else setTheme(R.style.AppThemeInfo);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -56,10 +56,10 @@ public class SettingsActivity extends AppCompatActivity {
 
 
                 mEdtior.putInt(Constants.FIELD_HEIGHT, Integer.parseInt(tvHeight.getText().toString()));
-                Toast.makeText(getApplicationContext(), tvHeight.getText().toString(), Toast.LENGTH_SHORT).show();
                 mEdtior.putInt(Constants.FIELD_WIDTH, Integer.parseInt(tvWidth.getText().toString()));
 
                 mEdtior.commit();
+                btnSave.setText("Saved");
             }
         });
 
@@ -124,7 +124,8 @@ public class SettingsActivity extends AppCompatActivity {
         btnCalculate = findViewById(R.id.btnCalculateSize);
         tvWidth = findViewById(R.id.widthValue);
         tvHeight = findViewById(R.id.heightValue);
-        mPrefs = getPreferences(MODE_PRIVATE);
+
+        mPrefs = getSharedPreferences(Constants.FIELD_SETTINGS, MODE_PRIVATE);
         mEdtior = mPrefs.edit();
 
         widthSeekbar.setMax(42 - 25);
@@ -159,14 +160,18 @@ public class SettingsActivity extends AppCompatActivity {
                             (Double.parseDouble(message.toString()) > 0)) {
                         fieldLatitude = Double.parseDouble(message.toString());
                         timer.cancel();
-                        Toast.makeText(getApplicationContext(), String.valueOf(fieldLatitude), Toast.LENGTH_SHORT).show();
+                        Log.i("Field_LATITUDE", String.valueOf(fieldLatitude));
+                        btnCalculate.setBackground(getResources().getDrawable(R.drawable.buttonshape_calculate_done));
+                        btnCalculate.setText("Done");
                     }
                 } else if (topic.equals("/tests/fieldCoordinates/longitude")) {
                     if(!(message.toString().isEmpty()) && !(message.toString().equals(null)) &&
                             (Double.parseDouble(message.toString()) > 0)) {
                         fieldLongitude = Double.parseDouble(message.toString());
                         timer.cancel();
-                        Toast.makeText(getApplicationContext(), String.valueOf(fieldLongitude), Toast.LENGTH_SHORT).show();
+                        Log.i("Field_LONGITUDE", String.valueOf(fieldLongitude));
+                        btnCalculate.setBackground(getResources().getDrawable(R.drawable.buttonshape_calculate_done));
+                        btnCalculate.setText("Done");
                     }
                 }
             }
@@ -181,6 +186,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        timer.cancel();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         double[] coordinates = new double[]{fieldLatitude, fieldLongitude};
         if(fieldLongitude != 0 && fieldLatitude != 0) {

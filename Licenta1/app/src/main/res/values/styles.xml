@@ -2,9 +2,9 @@
 
     <!-- Day/Light application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#ffffff</item>
+        <item name="colorPrimary">#D7D7D7</item>
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">#ffffff</item>
+        <item name="colorPrimaryDark">#9E9B96</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
     which is used to tint widgets -->
         <item name="colorAccent">#4d4d4d</item>
@@ -13,8 +13,9 @@
     colorControlHighlight, and colorSwitchThumbNormal. -->
 
         <!--<item name="android:windowBackground">@drawable/football_blurred</item> -->
-        <item name="backgroundcolor">#fcfcfc</item>
-        <item name="cardbackground">#ffffff</item>
+        <item name="backgroundcolor">#D7D7D7</item>
+
+        <item name="cardbackground">#D7D7D7</item>
         <item name="textcolor">#4d4d4d</item>
         <item name="hintcolor">#4d4d4d</item>
         <item name="edittextcolor">#4d4d4d</item>
@@ -28,19 +29,20 @@
 
     <!-- Night/Dark application theme. -->
     <style name="darktheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimary">#FF3D3741</item>
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorPrimaryDark">#FF3D3741</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
     which is used to tint widgets -->
-        <item name="colorAccent">#4d4d4d</item>
+        <item name="colorAccent">#79A3B3</item>
 
         <!-- You can also set colorControlNormal, colorControlActivated
     colorControlHighlight, and colorSwitchThumbNormal. -->
 
         <!-- <item name="android:windowBackground">@drawable/gradient2</item> -->
-        <item name="backgroundcolor">#303030</item>
-        <item name="cardbackground">#424242</item>
+        <item name="backgroundcolor">#FF3D3741</item>
+
+        <item name="cardbackground">#FF3D3741</item>
         <item name="textcolor">#ffffff</item>
         <item name="hintcolor">#ffffff</item>
         <item name="edittextcolor">#ffffff</item>
@@ -144,6 +146,31 @@
         <item name="colorPrimary">#00368e</item>
         <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">#00368e</item>
+        <!-- colorAccent is used as the default value for colorControlActivated,
+    which is used to tint widgets -->
+        <item name="colorAccent">#4d4d4d</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+    colorControlHighlight, and colorSwitchThumbNormal. -->
+
+        <!--<item name="android:windowBackground">@drawable/football_blurred</item> -->
+        <!--<item name="backgroundcolor">#fcfcfc</item>-->
+        <item name="cardbackground">#ffffff</item>
+        <item name="textcolor">#4d4d4d</item>
+        <item name="hintcolor">#4d4d4d</item>
+        <item name="edittextcolor">#4d4d4d</item>
+        <item name="menutextcolor">#4d4d4d</item>
+        <item name="usericon">@drawable/ic_action_user_black</item>
+        <item name="passicon">@drawable/ic_action_pass_black</item>
+        <item name="moonicon">@drawable/moon_black</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTranzition</item>
+    </style>
+
+    <!-- Day/Light Activity Info theme. -->
+    <style name="AppThemeInfo" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#79A3B3</item>
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">#79A3B3</item>
         <!-- colorAccent is used as the default value for colorControlActivated,
     which is used to tint widgets -->
         <item name="colorAccent">#4d4d4d</item>

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity   {
     public static double Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
     SharedPreferences prefs;
     final double r_earth = 6378000;
-    final double pi = 3.14;
+    final double pi = 3.14159265359;
 
     long clock = 0L;
 
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity   {
         }
 
 
-        prefs = getPreferences(MODE_PRIVATE);
+        prefs = getSharedPreferences(Constants.FIELD_SETTINGS, MODE_PRIVATE);
 
         if(getIntent().getDoubleArrayExtra(Constants.COORDINATES_ARRAY) != null) {
             coordinatesArray = getIntent().getDoubleArrayExtra(Constants.COORDINATES_ARRAY);
@@ -278,10 +278,15 @@ public class MainActivity extends AppCompatActivity   {
 
             if (Bx != 0 && By != 0) {
                 calculateFieldCoordinates();
-                Toast.makeText(getApplicationContext(), "A(" + Ax + ", " + Ay + ")", Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "B(" + Bx + ", " + By + ")", Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "C(" + Cx + ", " + Cx + ")", Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "D(" + Dx + ", " + Dy + ")", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "A(" + Ax + ", " + Ay + ")", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "B(" + Bx + ", " + By + ")", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "C(" + Cx + ", " + Cx + ")", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "D(" + Dx + ", " + Dy + ")", Toast.LENGTH_LONG).show();
+
+                Log.i("COORDS", "A(" + Ax + ", " + Ay + ")");
+                Log.i("COORDS", "B(" + Bx + ", " + By + ")");
+                Log.i("COORDS", "C(" + Cx + ", " + Cx + ")");
+                Log.i("COORDS", "D(" + Dx + ", " + Dy + ")");
             }
         }
 
@@ -405,24 +410,41 @@ public class MainActivity extends AppCompatActivity   {
         new_longitude = longitude + (dx / r_earth) * (180 / pi) / cos(latitude * pi/180);
          */
 
-        int fieldHeight = prefs.getInt(Constants.FIELD_HEIGHT, 15);
-        int fieldWidth = prefs.getInt(Constants.FIELD_WIDTH, 25);
+        double fieldHeight = prefs.getInt(Constants.FIELD_HEIGHT, 15);
+        double fieldWidth = prefs.getInt(Constants.FIELD_WIDTH, 25);
 
-        int fieldHeightKm = fieldHeight / 1000;
-        int fieldWidthKm = fieldWidth / 1000;
+        double fieldHeightKm = fieldHeight / 1000;
+        double fieldWidthKm = fieldWidth / 1000;
 
         double fieldHeightDegree = (fieldHeightKm / 40000) * 360;
         double fieldWidthDegree = (fieldWidthKm / 40000) * 360;
 
         Ay  = By;
         //Ax = Bx + (fieldWidth / r_earth) * (180 / pi) / Math.cos(By * pi/180);
-        Ax = Bx - ( fieldWidthDegree * Math.cos(2 * pi));
+        Ax = Bx - ( fieldHeight * Math.cos(2 * pi));
 
         Cx = Bx;
-        Cy = By - (fieldHeightDegree * Math.sin(pi / 2));
+        Cy = By - (fieldWidthDegree * Math.sin(pi / 2));
 
         Dy = Cy;
         Dx = Ax;
+
+        SharedPreferences coordsPrefs = getSharedPreferences(Constants.COORDINATES_PREFFS, MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = coordsPrefs.edit();
+
+        editor.putString(Constants.FIELD_AX, (String.valueOf(Ax)));
+        Log.i("PARSING AX", String.valueOf(Float.parseFloat(String.valueOf(Ax))));
+        editor.putString(Constants.FIELD_AY, (String.valueOf(Ay)));
+        editor.putString(Constants.FIELD_BX, (String.valueOf(Bx)));
+        editor.putString(Constants.FIELD_BY, (String.valueOf(By)));
+        editor.putString(Constants.FIELD_CX, (String.valueOf(Cx)));
+        editor.putString(Constants.FIELD_CY, (String.valueOf(Cy)));
+        editor.putString(Constants.FIELD_DX, (String.valueOf(Dx)));
+        editor.putString(Constants.FIELD_DY, (String.valueOf(Dy)));
+
+        editor.apply();
+
     }
 
     private void debugging() {

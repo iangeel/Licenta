@@ -10,5 +10,6 @@
     <color name="red"> #ff0000</color>
     <color name="green">#2eb510</color>
     <color name="orange">#ff7200</color>
+    <color name="polyLine">#f47742</color>
 
 </resources>

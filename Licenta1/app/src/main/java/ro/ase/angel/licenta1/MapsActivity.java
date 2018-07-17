@@ -9,13 +9,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CustomCap;
 import com.google.android.gms.maps.model.Dot;
 import com.google.android.gms.maps.model.Gap;
+import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
+import com.google.android.gms.maps.model.SquareCap;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +34,7 @@ public class MapsActivity extends FragmentActivity
 
     private double[] myCoordinates;
 
+    private static final int COLOR_ORANGE = 0x7f050073;
 
 
     @Override
@@ -64,7 +70,7 @@ public class MapsActivity extends FragmentActivity
 
         // Add a marker in Sydney and move the camera
         LatLng startPoint = new LatLng(myCoordinates[0], myCoordinates[1]);
-//        LatLng finishPoint = new LatLng(myCoordinates[myCoordinates.length - 1], myCoordinates[myCoordinates.length]);
+        LatLng finishPoint = new LatLng(myCoordinates[myCoordinates.length - 2], myCoordinates[myCoordinates.length-1]);
 
         PolylineOptions polylineOptions = new PolylineOptions();
         polylineOptions.clickable(true);
@@ -78,10 +84,20 @@ public class MapsActivity extends FragmentActivity
           }
         }
 
-        polylineOptions.width(5).color(Color.RED).geodesic(true);
-        googleMap.addPolyline(polylineOptions);
+        polylineOptions
+                .width(12)
+                .geodesic(true)
+                .color(getApplicationContext().getResources().getColor(R.color.orange))
+                .jointType(JointType.ROUND)
+                .startCap(new RoundCap())
+                .endCap(new RoundCap());
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint,13));
+
+
+        mMap.addPolyline(polylineOptions);
+        mMap.addMarker(new MarkerOptions().position(startPoint).flat(true).icon(BitmapDescriptorFactory.fromResource((R.drawable.placeholder_start))));
+        mMap.addMarker(new MarkerOptions().position(finishPoint).flat(true).icon(BitmapDescriptorFactory.fromResource((R.drawable.placeholder))));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint,13));
         //googleMap.setOnPolylineClickListener(this);
 
     }
@@ -90,4 +106,6 @@ public class MapsActivity extends FragmentActivity
     public void onPolylineClick(Polyline polyline) {
 
     }
+
+
 }
